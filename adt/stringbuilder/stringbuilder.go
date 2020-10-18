@@ -31,7 +31,6 @@ func (sb *stringBuilder) Println() {
 	fmt.Println(sb.ToString())
 }
 
-// TODO: what is difference bewteen append and s +=
 func (sb *stringBuilder) ToString() string {
 	s := ""
 	for _, v := range sb.buffer {
