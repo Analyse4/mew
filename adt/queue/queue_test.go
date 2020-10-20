@@ -14,7 +14,7 @@ func TestQueue(t *testing.T) {
 		q.Enqueue(nil, i)
 	}
 	for i := 0; i < 100; i++ {
-		if q.size() == 0 {
+		if q.Size() == 0 {
 			t.Error("size is 0, want: size is not 0, get: size is 0\n")
 		}
 		ma += q.Dequeue().Value.(int)
