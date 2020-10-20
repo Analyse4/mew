@@ -6,41 +6,45 @@ type node struct {
 	next  *node
 }
 
-type queue struct {
+type Queue struct {
 	first *node
-	end   *node
+	last  *node
 	len   int
 }
 
-func New() *queue {
-	return new(queue)
+func New() *Queue {
+	return new(Queue)
 }
 
-func (q *queue) Enqueue(k, v interface{}) {
-	n := &node{k, v, nil}
-	if q.end == nil {
-		q.first = n
-		q.end = q.first
+func (q *Queue) Enqueue(k, v interface{}) {
+	oldlast := q.last
+	q.last = &node{k, v, nil}
+	if q.IsEmpty() {
+		q.first = q.last
+	} else {
+		oldlast.next = q.last
 	}
-	q.end.next = n
-	q.end = n
 	q.len++
 }
 
-func (q *queue) Dequeue() *node {
+func (q *Queue) Dequeue() *node {
 	n := q.first
 	q.first = q.first.next
+	if q.IsEmpty() {
+		q.last = nil
+	}
 	q.len--
 	return n
 }
 
-func (q *queue) IsEmpty() bool {
-	if q.first == nil {
-		return true
-	}
-	return false
+func (q *Queue) IsEmpty() bool {
+	return q.first == nil
 }
 
-func (q *queue) size() int {
+func (q *Queue) Size() int {
 	return q.len
+}
+
+func (q *Queue) Search(key interface{}) *node {
+	return nil
 }
