@@ -30,3 +30,17 @@ func TestSymboltable(t *testing.T) {
 		t.Errorf("sum result is wrong, want: %v, got: %v\n", ra, ma)
 	}
 }
+
+func BenchmarkSymboltable(b *testing.B) {
+	st := New(Int, Int)
+	for i := 0; i < b.N; i++ {
+		st.Put(i, i)
+	}
+}
+
+func BenchmarkStandardMap(b *testing.B) {
+	m := make(map[int]int)
+	for i := 0; i < b.N; i++ {
+		m[i] = i
+	}
+}
