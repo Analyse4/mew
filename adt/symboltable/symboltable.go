@@ -1,6 +1,8 @@
 package symboltable
 
 import (
+	"bytes"
+	"encoding/binary"
 	"hash/maphash"
 	"log"
 	"reflect"
@@ -34,27 +36,22 @@ func (st *symboltable) Put(k, v interface{}) {
 	if reflect.TypeOf(v) != st.value {
 		log.Fatalf("type mismatch, want: %v, get: %v\n", st.value, reflect.ValueOf(v).Elem())
 	}
-	h.Write(reflect.ValueOf(k).Bytes())
-	index := h.Sum64() % maxbuffer
+	index := keyToIndex(k)
 	if st.buffer[index] == nil {
-		st.buffer[index] = new(linkedlist.Linkedlist)
+		st.buffer[index] = linkedlist.New()
 	}
 	st.buffer[index].Insert(k, v)
-	h.Reset()
 }
 
 func (st *symboltable) Get(k interface{}) interface{} {
 	if reflect.TypeOf(k) != st.key {
 		log.Fatalf("type mismatch, want: %v, get: %v\n", st.key, reflect.ValueOf(k).Elem())
 	}
-	h.Write(reflect.ValueOf(k).Bytes())
-	index := h.Sum64() % maxbuffer
+	index := keyToIndex(k)
 	if st.buffer[index] == nil {
-		h.Reset()
 		return nil
 	}
 	v := st.buffer[index].Get(k)
-	h.Reset()
 	return v
 }
 
@@ -62,13 +59,11 @@ func (st *symboltable) Delete(k interface{}) {
 	if reflect.TypeOf(k) != st.key {
 		log.Fatalf("type mismatch, want: %v, get: %v\n", st.key, reflect.ValueOf(k).Elem())
 	}
-	index := h.Sum64() % maxbuffer
+	index := keyToIndex(k)
 	if st.buffer[index] == nil {
-		h.Reset()
 		return
 	}
 	st.buffer[index].Delete(k)
-	h.Reset()
 }
 
 func (st *symboltable) IsEmpty() bool {
@@ -79,20 +74,29 @@ func (st *symboltable) Contains(k interface{}) bool {
 	if reflect.TypeOf(k) != st.key {
 		log.Fatalf("type mismatch, want: %v, get: %v\n", st.key, reflect.ValueOf(k).Elem())
 	}
-	h.Write(reflect.ValueOf(k).Bytes())
-	index := h.Sum64() % maxbuffer
+	index := keyToIndex(k)
 	if st.buffer[index] == nil {
-		h.Reset()
 		return false
 	}
-	h.Reset()
 	return nil != st.buffer[index].Get(k)
 }
 
 func (st *symboltable) Size() int {
 	var len int
 	for _, q := range st.buffer {
+		if q == nil {
+			continue
+		}
 		len += q.Size()
 	}
 	return len
+}
+
+func keyToIndex(k interface{}) uint64 {
+	buff := new(bytes.Buffer)
+	binary.Write(buff, binary.LittleEndian, k)
+	h.Write(buff.Bytes())
+	index := h.Sum64() % maxbuffer
+	h.Reset()
+	return index
 }
