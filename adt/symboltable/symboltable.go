@@ -1,3 +1,9 @@
+// Package symboltalble implements a map backed by a hash table.
+//
+// Elements are unordered in the map.
+//
+// Structure is not thread safe.
+
 package symboltable
 
 import (
