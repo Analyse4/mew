@@ -5,11 +5,11 @@ import "sync"
 type Node struct {
 	Key   interface{}
 	Value interface{}
-	Next  *node
+	Next  *Node
 }
 
 type Linkedlist struct {
-	first *node
+	first *Node
 	len   int
 	mu    *sync.Mutex
 }
@@ -22,7 +22,7 @@ func (q *Linkedlist) Insert(k, v interface{}) {
 	q.mu.Lock()
 	defer q.mu.Unlock()
 	if q.IsEmpty() {
-		q.first = &node{k, v, nil}
+		q.first = &Node{k, v, nil}
 		q.len++
 		return
 	}
@@ -33,7 +33,7 @@ func (q *Linkedlist) Insert(k, v interface{}) {
 		}
 	}
 	if inode == nil {
-		inode = &node{k, v, q.first}
+		inode = &Node{k, v, q.first}
 		q.first = inode
 		q.len++
 	}
