@@ -9,7 +9,7 @@ type Node struct {
 }
 
 type Linkedlist struct {
-	first *Node
+	First *Node
 	len   int
 	mu    *sync.Mutex
 }
@@ -22,19 +22,19 @@ func (q *Linkedlist) Insert(k, v interface{}) {
 	q.mu.Lock()
 	defer q.mu.Unlock()
 	if q.IsEmpty() {
-		q.first = &Node{k, v, nil}
+		q.First = &Node{k, v, nil}
 		q.len++
 		return
 	}
-	inode := q.first
+	inode := q.First
 	for ; inode != nil; inode = inode.Next {
 		if inode.Key == k {
 			inode.Value = v
 		}
 	}
 	if inode == nil {
-		inode = &Node{k, v, q.first}
-		q.first = inode
+		inode = &Node{k, v, q.First}
+		q.First = inode
 		q.len++
 	}
 }
@@ -42,7 +42,7 @@ func (q *Linkedlist) Insert(k, v interface{}) {
 func (q *Linkedlist) Get(k interface{}) interface{} {
 	q.mu.Lock()
 	defer q.mu.Unlock()
-	inode := q.first
+	inode := q.First
 	for ; inode != nil; inode = inode.Next {
 		if inode.Key == k {
 			return inode.Value
@@ -54,7 +54,7 @@ func (q *Linkedlist) Get(k interface{}) interface{} {
 func (q *Linkedlist) Delete(k interface{}) {
 	q.mu.Lock()
 	defer q.mu.Unlock()
-	inode := q.first
+	inode := q.First
 	for ; inode != nil; inode = inode.Next {
 		if inode.Next.Key == k {
 			nextnode := inode.Next.Next
@@ -65,7 +65,7 @@ func (q *Linkedlist) Delete(k interface{}) {
 }
 
 func (q *Linkedlist) IsEmpty() bool {
-	return q.first == nil
+	return q.First == nil
 }
 
 func (q *Linkedlist) Size() int {
