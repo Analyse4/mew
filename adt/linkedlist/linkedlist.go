@@ -2,10 +2,10 @@ package linkedlist
 
 import "sync"
 
-type node struct {
+type Node struct {
 	Key   interface{}
 	Value interface{}
-	next  *node
+	Next  *node
 }
 
 type Linkedlist struct {
@@ -27,7 +27,7 @@ func (q *Linkedlist) Insert(k, v interface{}) {
 		return
 	}
 	inode := q.first
-	for ; inode != nil; inode = inode.next {
+	for ; inode != nil; inode = inode.Next {
 		if inode.Key == k {
 			inode.Value = v
 		}
@@ -43,7 +43,7 @@ func (q *Linkedlist) Get(k interface{}) interface{} {
 	q.mu.Lock()
 	defer q.mu.Unlock()
 	inode := q.first
-	for ; inode != nil; inode = inode.next {
+	for ; inode != nil; inode = inode.Next {
 		if inode.Key == k {
 			return inode.Value
 		}
@@ -55,10 +55,10 @@ func (q *Linkedlist) Delete(k interface{}) {
 	q.mu.Lock()
 	defer q.mu.Unlock()
 	inode := q.first
-	for ; inode != nil; inode = inode.next {
-		if inode.next.Key == k {
-			nextnode := inode.next.next
-			nextnode.next = nextnode
+	for ; inode != nil; inode = inode.Next {
+		if inode.Next.Key == k {
+			nextnode := inode.Next.Next
+			nextnode.Next = nextnode
 			q.len--
 		}
 	}
