@@ -13,7 +13,9 @@ func (s *Stack) Push(v interface{}) {
 }
 
 func (s *Stack) Pop() interface{} {
-	return s.buffer[len(s.buffer)-1]
+	v := s.buffer[len(s.buffer)-1]
+	s.buffer = s.buffer[:len(s.buffer)-1]
+	return v
 }
 
 func (s *Stack) IsEmpty() bool {
