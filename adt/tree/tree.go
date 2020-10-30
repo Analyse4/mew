@@ -1,8 +1,8 @@
 package tree
 
 type Node struct {
-	value    interface{}
-	children []*Node
+	Value    interface{}
+	Children []*Node
 }
 
 type Tree struct {
