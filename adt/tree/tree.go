@@ -17,3 +17,7 @@ func New() *Tree {
 func (t *Tree) Height() int {
 	return 0
 }
+
+func (t *Tree) ChangeRoot(r *Node) {
+	t.root = r
+}
