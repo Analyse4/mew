@@ -12,3 +12,8 @@ type Tree struct {
 func New() *Tree {
 	return new(Tree)
 }
+
+// TODO
+func (t *Tree) Height() int {
+	return 0
+}
