@@ -84,3 +84,7 @@ func GenerateMinimalHeightTree(l []int) *Node {
 
 	return n
 }
+
+func (t *Tree) GetRoot() *Node {
+	return t.root
+}
