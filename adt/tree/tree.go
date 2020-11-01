@@ -64,3 +64,23 @@ func (t *Tree) Insert(v interface{}) {
 		}
 	}
 }
+
+// O(N)
+func GenerateMinimalHeightTree(l []int) *Node {
+	if len(l) == 0 {
+		return nil
+	}
+	mid := len(l) / 2
+	n := &Node{l[mid], make([]*Node, 2)}
+	if len(l) == 1 {
+		return n
+	}
+	n.Children[0] = GenerateMinimalHeightTree(l[:mid])
+	if mid+1 > len(l)-1 {
+		n.Children[1] = nil
+		return n
+	}
+	n.Children[1] = GenerateMinimalHeightTree(l[mid+1:])
+
+	return n
+}
