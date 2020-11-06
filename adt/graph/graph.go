@@ -15,7 +15,7 @@ type Graph struct {
 func New(v int) *Graph {
 	g := &Graph{v, 0, make([]*Node, 0)}
 	for i := 0; i < v; i++ {
-		g.Nodes = append(g.Nodes, &Node{0, make([]*Node, 0)})
+		g.Nodes = append(g.Nodes, &Node{i, make([]*Node, 0)})
 	}
 	return g
 }
