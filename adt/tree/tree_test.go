@@ -46,8 +46,7 @@ func TestGenerateMinimalHeightTree(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			tr := New()
-			tr.ChangeRoot(GenerateMinimalHeightTree(tt.args.l))
+			tr := GenerateMinimalHeightTree(tt.args.l)
 			if got := tr.Height(); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("MinimalHeightTree() = %v, want %v", got, tt.want)
 			}
