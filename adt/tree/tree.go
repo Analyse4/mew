@@ -1,5 +1,7 @@
 package tree
 
+import "github.com/Analyse4/mew/algs/quicksort"
+
 type Tree struct {
 	Value    interface{}
 	Children []*Tree
@@ -102,4 +104,13 @@ func GenerateMinimalHeightTree(l []int) *Tree {
 	n.Children[1] = GenerateMinimalHeightTree(l[mid+1:])
 
 	return n
+}
+
+func GenerateBaddestTree(l []int) *Tree {
+	quicksort.QuickSort(l)
+	tr := New()
+	for _, v := range l {
+		tr.Insert(v)
+	}
+	return tr
 }

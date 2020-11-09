@@ -53,3 +53,11 @@ func TestGenerateMinimalHeightTree(t *testing.T) {
 		})
 	}
 }
+
+func TestGenerateBaddestTree(t *testing.T) {
+	e := GenerateBaddestTree([]int{1, 2, 3, 4, 5})
+	ra := 5
+	if ra != e.Height() {
+		t.Fatalf("wrong, got: %v, want: %v\n", e.Height(), ra)
+	}
+}
