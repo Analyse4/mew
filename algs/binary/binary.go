@@ -35,8 +35,9 @@ func GetCountsOfDigits(num int) int {
 	}
 	endNum := 1
 	count := 0
-	if endNum <= num {
+	for endNum <= num {
 		count++
+		endNum <<= 1
 	}
 	return count
 }
