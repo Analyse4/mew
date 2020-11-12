@@ -27,3 +27,16 @@ func UpdateBit(num, i int, bitIs1 bool) int {
 	}
 	return tmp
 }
+
+// O(counts of target number's digits)
+func GetCountsOfDigits(num int) int {
+	if num == 0 {
+		return 1
+	}
+	endNum := 1
+	count := 0
+	if endNum <= num {
+		count++
+	}
+	return count
+}
