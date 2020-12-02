@@ -46,3 +46,44 @@ func swap(v1, v2 int, list []int) {
 	list[v1] = list[v2]
 	list[v2] = tmp
 }
+
+func QuickSortV2(l *[]int) {
+	if len(*l) <= 1 {
+		return
+	}
+	sp := splitV2(l)
+	tmpL := (*l)[:sp]
+	QuickSortV2(&tmpL)
+	if sp+1 < len(*l) {
+		tmpR := (*l)[sp+1:]
+		QuickSortV2(&tmpR)
+	}
+}
+
+func splitV2(l *[]int) int {
+	sp := 0
+	start := 1
+	end := len(*l) - 1
+	for {
+		for start <= end {
+			if (*l)[start] > (*l)[sp] {
+				break
+			}
+			start++
+		}
+		for end > start {
+			if (*l)[end] < (*l)[sp] {
+				break
+			}
+			end--
+		}
+		if end < start {
+			break
+		}
+		(*l)[start], (*l)[end] = (*l)[end], (*l)[start]
+		start++
+		end--
+	}
+	(*l)[sp], (*l)[end] = (*l)[end], (*l)[sp]
+	return end
+}
