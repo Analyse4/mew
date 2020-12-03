@@ -4,6 +4,7 @@ type HeapM struct {
 	h []int
 }
 
+// O(Nlog(N))
 func New(l []int) *HeapM {
 	heap := &HeapM{make([]int, 0)}
 	for i := len(l) / 2; i > 0; i-- {
@@ -14,7 +15,6 @@ func New(l []int) *HeapM {
 			}
 		}
 		if l[i-1] > l[min-1] {
-			//l[i-1], l[min-1] = l[min-1], l[i-1]
 			l = sink(l, i)
 		}
 	}
@@ -27,9 +27,10 @@ func (h *HeapM) Insert(num int) {
 	h.h = swim(h.h)
 }
 
+// O(log(N))
 func swim(l []int) []int {
 	target := len(l) - 1
-	for l[target] < l[target/2] {
+	for target/2 >= 0 && l[target] < l[target/2] {
 		l[target], l[target/2] = l[target/2], l[target]
 		target = target / 2
 	}
@@ -44,6 +45,7 @@ func (h *HeapM) Min() int {
 	return min
 }
 
+// O(logN)
 func sink(l []int, index int) []int {
 	target := index
 	for target*2 <= len(l) {

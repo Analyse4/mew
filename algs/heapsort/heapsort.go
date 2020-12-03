@@ -2,6 +2,7 @@ package heapsort
 
 import "github.com/Analyse4/mew/adt/heapM"
 
+// O(Nlog(N))
 func HeapSort(l []int) []int {
 	hp := heapM.New(l)
 	sortedL := make([]int, 0)

@@ -47,6 +47,7 @@ func swap(v1, v2 int, list []int) {
 	list[v2] = tmp
 }
 
+// O(N^2)
 func QuickSortV2(l *[]int) {
 	if len(*l) <= 1 {
 		return
