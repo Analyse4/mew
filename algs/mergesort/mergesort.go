@@ -1,6 +1,6 @@
 package mergesort
 
-// Time: O(N^2) Space: O(N)
+// Time: O(Nlog(N)) Space: O(N)
 func MergeSort(l []int) []int {
 	if len(l) == 1 {
 		return l
